@@ -31,7 +31,9 @@ $(document).ready(function(){
 /*** Exercise:2.2 Traversing ***/
 
   //1.Select all of the image elements on the page; log each image's alt attribute.
-  console.log($("img[alt]"));
+  $('img[alt]').each(function(index, imgElem){
+    console.log('Image: ' + index + ', alt: ' + imgElem.alt);
+  })
 
   //2.Select the search input text box, then traverse up to the form and add a class to the form.
   $(".input_text").parent().addClass("search-form");
@@ -40,7 +42,9 @@ $(document).ready(function(){
   $("#myList .current").removeClass('current').next().addClass('current');
 
   //4.Select the select element inside #specials; traverse your way to the submit button.
-  $("#specials").find('input[type="submit"');
+  var selectDayElement = $('#specials').find('select').filter('[name="day"]'); 
+  var submitDayButton = selectDayElement.parent().next().find('input').filter('[type="submit"]');
+  console.log(submitDayButton);
 
   //5.Select the first list item in the #slideshow element; add the class "current" to it, and then add a class of "disabled" to its sibling elements.
   $("#slideshow li:first").addClass('current').next().addClass('disabled');
