@@ -50,7 +50,6 @@ $(document).ready(function(){
 /*** Exercise:2.3 Manipulating ***/
 
   //1.Add five new list items to the end of the unordered list #myList.
-  // $('#myList').append("<li></li><li></li><li></li><li></li><li></li>");
   for(var i = 1; i <= 5; i++){
     $("<li>List item " + (i + 7) + "</li>").appendTo('#myList');
   }
@@ -67,7 +66,6 @@ $(document).ready(function(){
 
   //5.Add a new div.module to the page after the last one; put a copy of one of the existing images inside of it.
   var newDivModule = '<div class="module"></div>';
-  var lastImg = 'img:last'; 
-  $(lastImg).clone().appendTo(newDivModule).insertAfter('div.module:last');
-
+  var lastImg = $('img:last').clone(); 
+  $(newDivModule).append(lastImg).insertAfter('div.module:last');
 });
