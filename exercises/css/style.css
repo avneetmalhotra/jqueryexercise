@@ -11,6 +11,10 @@
 	color: #999;
 }
 
+.show{
+	display: block !important;
+}
+
 h1 {
 	font-size: 250%;
 	margin: 5px 0 10px 0;
