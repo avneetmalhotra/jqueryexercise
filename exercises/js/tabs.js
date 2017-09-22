@@ -1,31 +1,43 @@
-$(document).ready(function(){
-  /***************************************************/
-  /******* Exercise-4.2-Add tabbed navigation ********/
+/* Exercise-4.2-Add tabbed navigation */
 
+function Tabs(selectors){
+  this.$modules = $(selectors.modules);
+}
+
+Tabs.prototype.init = function(){
   //1.Hide all of the modules.
-  var $modules = $('div.module');
-  $modules.hide();
+  this.$modules.hide();
 
   //2.Create an unordered list element before the first module.
-  var $moduleNav = $('<ul></ul>').insertBefore($modules.eq(0));
+  this.createNavbar();
 
-  //3.Iterate over the modules using $.fn.each.For each module, use the text of the 
-  //h2 element as the text for a list item that you add to the unordered list element.
-  $modules.each(function(){
+  this.addTabs();
+
+  this.$modules.first().show();
+};
+
+Tabs.prototype.createNavbar = function(){
+  this.$moduleNav = $('<ul></ul>').insertBefore(this.$modules.eq(0));
+};
+
+Tabs.prototype.addTabs = function(){
+  var that = this;
+  this.$modules.each(function(){
     var $module = $(this),
-        $moduleName = $module.children('h2');
+        $moduleName = $module.children('h2').text(),
+        $tab = $('<li></li>').appendTo(that.$moduleNav).text($moduleName);
 
-    var $navElem = $('<li></li>').appendTo($moduleNav).text($moduleName.text());
-    
-    //4.Bind a click event to the list item that:
-      //1.Shows the related module, and hides any other modules
-      //2.Adds a class of "current" to the clicked list item
-      //3.Removes the class "current" from the other list item
-    $navElem.click(function(){
-      $module.show().siblings('div.module').hide();
-    });
+    that.bindClickEventToTab($tab, $module);
   });
-  
-  //5.Finally, show the first tab.
-  $moduleNav.children('li:first').show();    
+};
+
+Tabs.prototype.bindClickEventToTab = function($tab, $relatedModule){
+  $tab.click(function(){
+    $relatedModule.show().siblings('div.module').hide();
+  });
+};
+
+$(document).ready(function(){
+  var tabs = new Tabs({'modules' : 'div.module'});
+  tabs.init();
 });
