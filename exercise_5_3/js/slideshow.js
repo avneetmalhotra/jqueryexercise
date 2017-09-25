@@ -1,42 +1,44 @@
 /*Exercise 5.3 Create a slideshow*/
 
-function Slideshow(element){
-  this.element = element;
-  this.childrenListItems = element.children('li');
-  this.currentSlide = this.childrenListItems.first();
+function Slideshow(options){
+  this.$element = $(options.slideshowSelector);
+  this.slideshowNavbarRef = options.slideshowNavbarRef;
+  this.$childrenListItems = this.$element.children('li');
+  this.$currentSlide = this.$childrenListItems.first();
 }
 
 Slideshow.prototype.init = function(){
   this.moveElementToTop();
   this.hideAllChildren();
+  this.runSlideshow();
+  this.slideshowNavbarRef.insertNavbar();
 };
 
 Slideshow.prototype.moveElementToTop = function(){
-  this.element.prependTo('body');
+  this.$element.prependTo('body');
 };
 
 Slideshow.prototype.hideAllChildren = function(){
-  this.childrenListItems.hide();
+  this.$childrenListItems.hide();
 };
 
-Slideshow.prototype.showSlideshow = function(slideshowNavbarRef){
-  this.slideshowNavbarRef = slideshowNavbarRef;
+Slideshow.prototype.runSlideshow = function(){
   this.animateItems();
 };
 
 Slideshow.prototype.animateItems = function(){
-  var that = this;
+  var _this = this;
 
   //when last element + 1 element is reached
-  if(!this.currentSlide.length)
-    this.currentSlide = this.childrenListItems.first();
+  if(!this.$currentSlide.length)
+    this.$currentSlide = this.$childrenListItems.first();
 
-  this.slideshowNavbarRef.updateSecondTab(this.currentSlide);
+  this.slideshowNavbarRef.updateSecondTab(this.$currentSlide);
 
-  this.currentSlide.fadeIn(3000, function(){
+  this.$currentSlide.fadeIn(3000, function(){
     $(this).delay(1500).fadeOut(2000, function(){
-      that.currentSlide = that.currentSlide.next('li');
-      that.animateItems();
+      _this.$currentSlide = _this.$currentSlide.next('li');
+      _this.animateItems();
     });
   });
 };

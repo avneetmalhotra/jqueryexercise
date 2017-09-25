@@ -1,9 +1,11 @@
 $(document).ready(function(){
-  var slideshow = new Slideshow($('#slideshow')),
-      slideshowNavbar = new Navbar(slideshow, 'slideshowNav');
+  var slideshowNavbar = new Navbar({'slideshowSelector' : '#slideshow',
+                                    'slideshowNavClass' : 'slideshowNav'
+                                  }),
+      slideshow = new Slideshow({'slideshowSelector' : '#slideshow',
+                                 'slideshowNavbarRef' : slideshowNavbar
+                                });
   
-  slideshow.init();
   slideshowNavbar.init();
-  
-  slideshow.showSlideshow(slideshowNavbar);
+  slideshow.init();
 });
