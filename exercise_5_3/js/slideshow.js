@@ -23,10 +23,6 @@ Slideshow.prototype.hideAllChildren = function(){
 };
 
 Slideshow.prototype.runSlideshow = function(){
-  this.animateItems();
-};
-
-Slideshow.prototype.animateItems = function(){
   var _this = this;
 
   //when last element + 1 element is reached
@@ -38,9 +34,7 @@ Slideshow.prototype.animateItems = function(){
   this.$currentSlide.fadeIn(3000, function(){
     $(this).delay(1500).fadeOut(2000, function(){
       _this.$currentSlide = _this.$currentSlide.next('li');
-      _this.animateItems();
+      _this.runSlideshow();
     });
   });
 };
-
-
