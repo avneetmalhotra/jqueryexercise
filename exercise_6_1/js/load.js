@@ -23,19 +23,19 @@ Load.prototype.correctHrefAttrValues = function(){
 };
 
 Load.prototype.whenBlogHeadineAnchorClicked = function(){
-  var that = this;
+  var _this = this;
   
   return function(eventObj){
     eventObj.preventDefault();
     
     var hrefAttrValue = $(this).attr('href'), 
         targetDiv = $(this).parent('h3').data('target-div');
-    that.loadContent(targetDiv, hrefAttrValue);
+    _this.loadContent(targetDiv, hrefAttrValue);
   };
 };
 
 Load.prototype.createTargetDivs = function($headline){
-  this.$targetDivCreated = $('<div class="target"></div>').insertAfter(this.$blogHeadlines);
+  $('<div class="target"></div>').insertAfter(this.$blogHeadlines);
 };
 
 Load.prototype.saveTargetDivsRefInBlogHeadlines = function(){
@@ -46,15 +46,10 @@ Load.prototype.saveTargetDivsRefInBlogHeadlines = function(){
 };
 
 Load.prototype.loadContent = function(targetElement, hrefAttrValue){
-  var contentIdIndex = hrefAttrValue.lastIndexOf('#'),
-      contentId = hrefAttrValue.slice(contentIdIndex),
-      contentUrl = hrefAttrValue.slice(0, contentIdIndex),
-      finalUrl = contentUrl + ' ' + contentId;
-  
-  targetElement.load(finalUrl);
+  targetElement.load(hrefAttrValue.split('#').join(' #'));
 };
 
 $(document).ready(function(){
-  var loadBlog = new Load({'$blogHeadlines' : $('#blog').find('h3')});
+  var loadBlog = new Load({ '$blogHeadlines' : $('#blog').find('h3') });
   loadBlog.init();
 }); 
