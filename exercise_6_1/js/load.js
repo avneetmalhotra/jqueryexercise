@@ -52,4 +52,4 @@ Load.prototype.loadContent = function(targetElement, hrefAttrValue){
 $(document).ready(function(){
   var loadBlog = new Load({ '$blogHeadlines' : $('#blog').find('h3') });
   loadBlog.init();
-}); 
+});
