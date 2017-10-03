@@ -2,7 +2,7 @@
 
 function Tabs(options){
   this.modulesSelector = options.modulesSelector;
-  this.$modules = $(options.$modulesElement);
+  this.$modules = options.$modulesElement;
 }
 
 Tabs.prototype.init = function(){
