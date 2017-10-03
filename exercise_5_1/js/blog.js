@@ -1,26 +1,33 @@
 /*Exercise 5.1 Reveal hidden text*/
-function Blog(elements){
-  this.$blog = elements.$blog;
-  this.$headlinesAnchors = elements.$headlinesAnchors;
+function Blog(options){
+  this.$blog = options.$blog;
+  this.$headlinesAnchors = options.$headlinesAnchors;
+  this.excerptParagraphSelector = options.excerptParagraphSelector;
 }
 
 Blog.prototype.init = function(){
-  this.$headlinesAnchors.click(this.headlinesAnchorClickHandler);
+  this.$headlinesAnchors.click(this.headlinesAnchorClickHandler());
 };
 
-Blog.prototype.headlinesAnchorClickHandler = function(eventObj){
-  eventObj.preventDefault();
+Blog.prototype.headlinesAnchorClickHandler = function(){
+  var _this = this;
 
-  var $excerptPara = $(this).closest('h3').siblings('p.excerpt'),
-      $cousinExcerptParas = $excerptPara.closest('li').siblings('li').find('p.excerpt');
+  return function(eventObj){  
+    eventObj.preventDefault();
 
-  $excerptPara.slideToggle();
-  $cousinExcerptParas.slideUp();
+    var $excerptPara = $(this).closest('h3').siblings(_this.excerptParagraphSelector),
+        $cousinExcerptParas = $excerptPara.closest('li').siblings('li').find(_this.excerptParagraphSelector);
+
+    $excerptPara.slideToggle();
+    $cousinExcerptParas.slideUp();
+  };
 };
 
 $(document).ready(function(){
-  var blog = new Blog({'$blog' : $('#blog'),
-                       '$headlinesAnchors' : $('#blog').find('a')
-                      });
+  var blogArguments = { $blog : $('#blog'),
+                        $headlinesAnchors : $('#blog').find('a'),
+                        excerptParagraphSelector : 'p.excerpt'
+                      },
+      blog = new Blog(blogArguments);
   blog.init();
 });
