@@ -1,10 +1,13 @@
 $(document).ready(function(){
-  var slideshowNavbar = new Navbar({'slideshowSelector' : '#slideshow',
-                                    'slideshowNavClass' : 'slideshowNav'
-                                  }),
-      slideshow = new Slideshow({'slideshowSelector' : '#slideshow',
-                                 'slideshowNavbarRef' : slideshowNavbar
-                                });
+  var slideshowNavbarArguments = { slideshowElement : $('#slideshow'),
+                                   slideshowNavbarClass : 'slideshowNavbar'
+                                  },
+      slideshowNavbar = new Navbar(slideshowNavbarArguments),
+
+      slideshowArguments = { slideshowElement : $('#slideshow'),
+                             slideshowNavbarReference : slideshowNavbar
+                            },
+      slideshow = new Slideshow(slideshowArguments);
   
   slideshowNavbar.init();
   slideshow.init();

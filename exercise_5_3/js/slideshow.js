@@ -1,25 +1,24 @@
 /*Exercise 5.3 Create a slideshow*/
-
 function Slideshow(options){
-  this.$element = $(options.slideshowSelector);
-  this.slideshowNavbarRef = options.slideshowNavbarRef;
-  this.$childrenListItems = this.$element.children('li');
-  this.$currentSlide = this.$childrenListItems.first();
+  this.$slideshowElement = options.slideshowElement;
+  this.slideshowNavbarReference = options.slideshowNavbarReference
+  this.$allSlides = this.$slideshowElement.children('li');
+  this.$currentSlide = this.$allSlides.first();
 }
 
 Slideshow.prototype.init = function(){
-  this.moveElementToTop();
-  this.hideAllChildren();
+  this.moveSlideshowElementToTop();
+  this.hideAllSlides();
   this.runSlideshow();
-  this.slideshowNavbarRef.insertNavbar();
+  this.slideshowNavbarReference.insertNavbar();
 };
 
-Slideshow.prototype.moveElementToTop = function(){
-  this.$element.prependTo('body');
+Slideshow.prototype.moveSlideshowElementToTop = function(){
+  this.$slideshowElement.prependTo('body');
 };
 
-Slideshow.prototype.hideAllChildren = function(){
-  this.$childrenListItems.hide();
+Slideshow.prototype.hideAllSlides = function(){
+  this.$allSlides.hide();
 };
 
 Slideshow.prototype.runSlideshow = function(){
@@ -27,9 +26,9 @@ Slideshow.prototype.runSlideshow = function(){
 
   //when last element + 1 element is reached
   if(!this.$currentSlide.length)
-    this.$currentSlide = this.$childrenListItems.first();
+    this.$currentSlide = this.$allSlides.first();
 
-  this.slideshowNavbarRef.updateSecondTab(this.$currentSlide);
+  this.slideshowNavbarReference.updateSecondTab(this.$currentSlide);
 
   this.$currentSlide.fadeIn(3000, function(){
     $(this).delay(1500).fadeOut(2000, function(){
