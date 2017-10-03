@@ -1,7 +1,8 @@
 /* Exercise-4.2-Add tabbed navigation */
 
 function Tabs(options){
-  this.$modules = $(options.modules);
+  this.modulesSelector = options.modulesSelector;
+  this.$modules = $(options.$modulesElement);
 }
 
 Tabs.prototype.init = function(){
@@ -15,7 +16,7 @@ Tabs.prototype.init = function(){
 
   this.insertNav();
 
-  this.$modulesNav.on('click', 'li', this.toggleModule);
+  this.$modulesNav.on('click', 'li', this.toggleModule());
 
   this.$modules.first().show();
 };
@@ -28,7 +29,7 @@ Tabs.prototype.addTabs = function(){
   var _this = this;
 
   this.$modules.each(function(){
-    $('<li></li>').appendTo(_this.$modulesNav).text($(this).find('h2').text()).data('corresondingModule', $(this));
+    $('<li></li>').text($(this).find('h2').text()).data('corresondingModule', $(this)).appendTo(_this.$modulesNav);
   });
 };
 
@@ -37,10 +38,17 @@ Tabs.prototype.insertNav = function(){
 };
 
 Tabs.prototype.toggleModule = function(){
-  $(this).data('corresondingModule').show().siblings('div.module').hide();
+  var _this = this;
+
+  return function(){
+    $(this).data('corresondingModule').show().siblings(_this.modulesSelector).hide();
+  }
 };
 
 $(document).ready(function(){
-  var tabs = new Tabs({'modules' : 'div.module'});
+  var tabsOptions = { modulesSelector : 'div.module',
+                      $modulesElement : $('div.module')
+                    },
+      tabs = new Tabs(tabsOptions);
   tabs.init();
 });
