@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
   var targetDiv = new TargetDiv('#specials');
   targetDiv.createTargetDiv();
